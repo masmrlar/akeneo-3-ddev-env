@@ -1,0 +1,31 @@
+---
+version: "3.6"
+
+services:
+  mysql:
+    container_name: ddev-${DDEV_SITENAME}-mysql
+    image: mysql:5.7
+    stop_grace_period: 60s 
+    restart: "no"
+    #user: "$DDEV_UID:$DDEV_GID"
+    ports:
+      - 3306
+    volumes:
+      - mysql-database:/var/lib/mysql
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    environment:
+      - HTTP_EXPOSE=3306:3306
+      - HOST_NAME=db-mysql.${DDEV_SITENAME}
+      - LOG_LEVEL=info
+      - MYSQL_USER=db
+      - MYSQL_PASSWORD=db
+      - MYSQL_ROOT_PASSWORD=db
+      - MYSQL_DATABASE=db
+
+volumes:
+  mysql-database:
+    name: "${DDEV_SITENAME}-mysql"
+
+

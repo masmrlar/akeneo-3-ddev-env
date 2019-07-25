@@ -1,0 +1,29 @@
+---
+version: "3.6"
+
+services:
+  elasticsearch:
+    container_name: ddev-${DDEV_SITENAME}-elasticsearch
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.8.1
+    stop_grace_period: 60s 
+    restart: "no"
+    #user: "$DDEV_UID:$DDEV_GID"
+    ports:
+      - 9200
+      - 9300
+    volumes: 
+      - elasticsearch:/usr/share/elasticsearch/data
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    environment:
+      - VIRTUAL_HOST=elasticsearch.${DDEV_SITENAME}
+      - HTTP_EXPOSE=9200:9200
+      - HOST_NAME=elasticsearch.${DDEV_SITENAME}
+      - LOG_LEVEL=info
+      - discovery.type=single-node
+
+volumes:
+  elasticsearch:
+    name: "${DDEV_SITENAME}-elasticsearch"
+
