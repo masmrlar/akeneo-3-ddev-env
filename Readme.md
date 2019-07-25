@@ -6,7 +6,7 @@ A  lightweight/simple ddev env for Akeneo 3.x development.
 
 * install [ddev](https://ddev.readthedocs.io/en/stable/)
 * startup the ddev env
-* checkout our akeneo project into `pim-project` - the ddev config is set up to serve from `/var/www/pim-project/web`
+* checkout our akeneo project into `pim-project` - the ddev config is set up to serve from `/var/www/html/pim-project/web`
   * run you composer or bin/console commands using `ddev exec` or better `ddev ssh` (don't forget `ddev auth ssh` prior to ddev ssh)
 
 ## Details on the Configuration
@@ -114,3 +114,9 @@ Setting up a pim project to get a plain Akeneo 3.1 running in ddev (see also [ht
   ```
 
 * Now surf to [https://akeneo-3.1.ddev.site/](https://akeneo-3.1.ddev.site/) and login using `admin` / `admin`
+
+To also see running jobs, dont forget to run 
+
+```bash
+ddev exec /var/www/html/pim-project/bin/console akeneo:batch:job-queue-consumer-daemon --env=prod
+```
